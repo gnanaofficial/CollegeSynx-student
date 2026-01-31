@@ -1,5 +1,5 @@
 import '../../domain/entities/case.dart';
-import '../../domain/entities/event.dart';
+import '../../../events/domain/entities/event.dart';
 import '../../domain/entities/student_stats.dart';
 import '../../domain/repositories/student_repository.dart';
 import '../../../../domain/entities/student.dart';
@@ -27,7 +27,7 @@ class MockStudentRepository implements StudentRepository {
       Case(
         id: '1',
         title: 'On-Duty Request',
-        description: 'Symposium - SVCE Tech Day',
+        description: 'Symposium - CollegeSynx Tech Day',
         status: CaseStatus.pending,
         date: DateTime.now(), // Today
       ),
@@ -60,6 +60,7 @@ class MockStudentRepository implements StudentRepository {
         date: DateTime(2023, 10, 24),
         timeRange: '09:00 AM - 12:00 PM',
         location: 'Exam Hall B',
+        isRegistered: true,
       ),
       Event(
         id: '2',
@@ -69,6 +70,7 @@ class MockStudentRepository implements StudentRepository {
         date: DateTime(2023, 11, 02),
         timeRange: '02:00 PM - 04:00 PM',
         location: 'Auditorium',
+        isRegistered: false,
       ),
     ];
   }

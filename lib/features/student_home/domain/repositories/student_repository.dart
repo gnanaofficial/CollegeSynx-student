@@ -1,6 +1,6 @@
 import '../entities/student_stats.dart';
 import '../entities/case.dart';
-import '../entities/event.dart';
+import '../../../events/domain/entities/event.dart';
 
 import '../../../../domain/entities/student.dart';
 

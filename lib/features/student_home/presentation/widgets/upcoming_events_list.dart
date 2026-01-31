@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/event.dart';
+import '../../../events/domain/entities/event.dart';
 import 'package:intl/intl.dart';
 
 class UpcomingEventsList extends StatelessWidget {
@@ -138,6 +138,7 @@ class UpcomingEventsList extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 12),
+                            const SizedBox(width: 12),
                             Container(
                               width: 4,
                               height: 4,
@@ -147,12 +148,15 @@ class UpcomingEventsList extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 12),
-                            Text(
-                              event.location,
-                              style: TextStyle(
-                                color: Colors.red.shade400,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
+                            Flexible(
+                              child: Text(
+                                event.location,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.red.shade400,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ],

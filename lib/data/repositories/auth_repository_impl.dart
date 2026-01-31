@@ -11,31 +11,31 @@ class AuthRepositoryImpl implements AuthRepository {
     'student123': UserEntity(
       id: 'student123',
       name: 'John Doe',
-      email: 'john.doe@student.svce.edu.in',
+      email: 'john.doe@student.collegesynx.edu.in',
       role: UserRole.student,
     ),
     'faculty123': UserEntity(
       id: 'faculty123',
       name: 'Dr. Smith',
-      email: 'smith@svce.edu.in',
+      email: 'smith@collegesynx.edu.in',
       role: UserRole.faculty,
     ),
     'admin123': UserEntity(
       id: 'admin123',
       name: 'Admin User',
-      email: 'admin@svce.edu.in',
+      email: 'admin@collegesynx.edu.in',
       role: UserRole.admin,
     ),
     'gnana123': UserEntity(
       id: '24BFA33L12',
       name: 'Gnana Sekhar',
-      email: 'gnanasekhar@student.svce.edu.in',
+      email: 'gnanasekhar@student.collegesynx.edu.in',
       role: UserRole.student,
     ),
     'vignesh123': UserEntity(
       id: '24BFA33L04',
       name: 'Vignesh',
-      email: 'vigneshkumar@student.svce.edu.in',
+      email: 'vigneshkumar@student.collegesynx.edu.in',
       role: UserRole.student,
     ),
   };

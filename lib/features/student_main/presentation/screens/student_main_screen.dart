@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../student_home/presentation/screens/student_home_screen.dart';
 import '../../../student_profile/presentation/screens/student_profile_screen.dart';
-import '../../../academics/presentation/screens/academics_screen.dart';
 import '../../../cases/presentation/screens/cases_screen.dart';
+import '../../../events/presentation/screens/events_screen.dart';
 
 class StudentMainScreen extends StatefulWidget {
   const StudentMainScreen({super.key});
@@ -16,7 +16,7 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
 
   final List<Widget> _screens = [
     const StudentHomeScreen(),
-    const AcademicsScreen(),
+    const EventsScreen(), // NEW SCREEN
     const CasesScreen(),
     const StudentProfileScreen(),
   ];
@@ -39,9 +39,9 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.school_outlined),
-            selectedIcon: Icon(Icons.school),
-            label: 'Academics',
+            icon: Icon(Icons.calendar_month_outlined),
+            selectedIcon: Icon(Icons.calendar_month),
+            label: 'Events',
           ),
           NavigationDestination(
             icon: Icon(Icons.folder_open_outlined),

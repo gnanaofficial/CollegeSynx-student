@@ -14,7 +14,7 @@ Future<void> main() async {
       overrides: [
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),
       ],
-      child: const LifecycleManager(child: SvceApp()),
+      child: const LifecycleManager(child: CollegeSynxApp()),
     ),
   );
 }

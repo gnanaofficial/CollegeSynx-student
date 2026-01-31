@@ -110,7 +110,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   // Auto-trigger biometric prompt
   Future<void> promptBiometric(BuildContext context) async {
     // Only prompt if Biometrics is enabled and we need verification
-    if (!state.isMpinVerified && await _mpinService.isBiometricEnabled) {
+    if (!state.isMpinVerified && _mpinService.isBiometricEnabled) {
       final verified = await _mpinService.authenticateWithBiometrics();
       if (verified) {
         verifyMpin();

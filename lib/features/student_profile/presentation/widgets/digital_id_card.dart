@@ -117,7 +117,7 @@ class DigitalIDCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'SVCE',
+                    'CollegeSynx',
                     style: GoogleFonts.outfit(
                       color: Colors.white,
                       fontSize: 14,

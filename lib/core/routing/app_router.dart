@@ -9,21 +9,16 @@ import '../../features/auth/presentation/set_mpin_screen.dart';
 import '../../features/auth/presentation/verify_mpin_screen.dart';
 import '../../features/student_main/presentation/screens/student_main_screen.dart';
 
-import '../../features/splash/presentation/splash_screen.dart';
-
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: '/splash',
+    initialLocation: '/login',
     refreshListenable: AuthNotifierListenable(ref.read(authProvider.notifier)),
     redirect: (context, state) {
       final authState = ref.read(authProvider);
       final isLoggedIn = authState.status == AuthStatus.authenticated;
       final isLoggingIn = state.uri.toString() == '/login';
-      final isSplash = state.uri.toString() == '/splash';
 
       if (!isLoggedIn) {
-        // Allow access to splash and login
-        if (isSplash) return null;
         return isLoggingIn ? null : '/login';
       }
 
@@ -45,9 +40,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       }
 
       // 3. Authenticated & Verified & MPIN Set.
-      // If trying to access login, splash, or mpin pages, redirect to dashboard.
+      // If trying to access login, or mpin pages, redirect to dashboard.
       if (isLoggingIn ||
-          isSplash ||
           state.uri.toString() == '/set-mpin' ||
           state.uri.toString() == '/verify-mpin') {
         return '/student-dashboard';
@@ -56,10 +50,6 @@ final routerProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
-      GoRoute(
-        path: '/splash',
-        builder: (context, state) => const SplashScreen(),
-      ),
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(
         path: '/set-mpin',

@@ -3,7 +3,7 @@ import '../../domain/repositories/student_repository.dart';
 import '../../data/repositories/mock_student_repository.dart';
 import '../../domain/entities/student_stats.dart';
 import '../../domain/entities/case.dart';
-import '../../domain/entities/event.dart';
+import '../../../events/domain/entities/event.dart';
 
 // Repository Provider
 final studentRepositoryProvider = Provider<StudentRepository>((ref) {
