@@ -76,7 +76,9 @@ class AcademicSummaryCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: LinearProgressIndicator(
-              value: stats.degreeCompletionPercent,
+              value: stats.totalCredits > 0
+                  ? stats.earnedCredits / stats.totalCredits
+                  : 0.0,
               backgroundColor: Colors.grey.shade800,
               valueColor: const AlwaysStoppedAnimation<Color>(
                 Color(0xFFE53935),

@@ -1,40 +1,50 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/repositories/mock_event_repository.dart';
+import '../../data/repositories/firestore_event_repository.dart';
 import '../../domain/entities/event.dart';
 import '../../domain/entities/event_update.dart';
+import '../../../student_home/presentation/providers/student_provider.dart'; // For repo and events
+import '../../../student_profile/state/student_provider.dart'; // For currentStudentProvider
+import '../../../auth/state/auth_provider.dart';
 
-final eventRepositoryProvider = Provider<MockEventRepository>((ref) {
-  return MockEventRepository();
-});
+// Use the repo provider from student_provider or define here?
+// Reusing from student_provider to ensure consistent studentId.
 
 final eventsListProvider = FutureProvider.autoDispose<List<Event>>((ref) async {
   final repository = ref.watch(eventRepositoryProvider);
   return repository.getAllEvents();
 });
 
+// Updates not yet implemented in Firestore repo, returning empty list or simple implementation later
 final eventUpdatesProvider = FutureProvider.autoDispose<List<EventUpdate>>((
   ref,
 ) async {
-  final repository = ref.watch(eventRepositoryProvider);
-  return repository.getUpdatesForRegisteredEvents();
+  // Placeholder
+  return [];
 });
 
-// A provider to handle toggle registration side-effect and refresh lists
 class EventRegisterNotifier extends StateNotifier<AsyncValue<void>> {
-  final MockEventRepository _repository;
+  final FirestoreEventRepository _repository;
   final Ref _ref;
 
   EventRegisterNotifier(this._repository, this._ref)
     : super(const AsyncData(null));
 
-  Future<void> toggleRegistration(String eventId) async {
+  Future<void> registerForEvent(Event event) async {
     state = const AsyncLoading();
     try {
-      await _repository.toggleRegistration(eventId);
+      final studentAsync = _ref.read(currentStudentProvider);
+      final student = studentAsync.value;
+
+      if (student == null) {
+        throw Exception("Student not found");
+      }
+
+      await _repository.registerForEvent(event, student);
       state = const AsyncData(null);
-      // Refresh the lists to reflect changes
+      // Refresh the lists to reflect changes (e.g. capacity updates)
       _ref.invalidate(eventsListProvider);
-      _ref.invalidate(eventUpdatesProvider);
+
+      // We might want to optimistic update isRegistered locally if we tracked it
     } catch (e, st) {
       state = AsyncError(e, st);
     }

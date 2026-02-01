@@ -1,4 +1,4 @@
-package com.svce.student.collegesynx_student
+package svce.collegesynx_student
 
 import io.flutter.embedding.android.FlutterActivity
 

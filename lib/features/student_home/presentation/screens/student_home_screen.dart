@@ -18,41 +18,49 @@ class StudentHomeScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FE), // Light background
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const StudentHeader(),
-              const SizedBox(height: 10),
-              statsAsync.when(
-                data: (stats) => AcademicSummaryCard(stats: stats),
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (err, stack) => Center(child: Text('Error: $err')),
-              ),
-              const SizedBox(height: 24),
-
-              // Quick Actions Row (New Case, Timetable, Results) - Explicitly requested NOT to include "New Case" etc adjacent shortcuts in "STUDENT ROLE CONTEXT" section 1,
-              // but the image shows them.
-              // "⚠️ Do NOT include “New Case” or adjacent shortcut modules shown in the image" - OK, SKITTING per USER INSTRUCTION 1.
-              caseAsync.when(
-                data: (cases) => OngoingCasesList(cases: cases),
-                loading: () => const SizedBox(
-                  height: 100,
-                  child: Center(child: CircularProgressIndicator()),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            // Refresh all providers and wait for them
+            await Future.wait([
+              ref.refresh(studentStatsProvider.future),
+              ref.refresh(ongoingCasesProvider.future),
+              ref.refresh(upcomingEventsProvider.future),
+            ]);
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const StudentHeader(),
+                const SizedBox(height: 10),
+                statsAsync.when(
+                  data: (stats) => AcademicSummaryCard(stats: stats),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (err, stack) => Center(child: Text('Error: $err')),
                 ),
-                error: (err, stack) => Text('Error cases: $err'),
-              ),
-              const SizedBox(height: 24),
-              eventAsync.when(
-                data: (events) => UpcomingEventsList(events: events),
-                loading: () => const SizedBox(
-                  height: 100,
-                  child: Center(child: CircularProgressIndicator()),
+                const SizedBox(height: 24),
+                caseAsync.when(
+                  data: (cases) => OngoingCasesList(cases: cases),
+                  loading: () => const SizedBox(
+                    height: 100,
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                  error: (err, stack) => Text('Error cases: $err'),
                 ),
-                error: (err, stack) => Text('Error events: $err'),
-              ),
-              const SizedBox(height: 24),
-            ],
+                const SizedBox(height: 24),
+                eventAsync.when(
+                  data: (events) => UpcomingEventsList(events: events),
+                  loading: () => const SizedBox(
+                    height: 100,
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                  error: (err, stack) => Text('Error events: $err'),
+                ),
+                const SizedBox(height: 24),
+              ],
+            ),
           ),
         ),
       ),

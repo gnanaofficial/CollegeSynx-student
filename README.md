@@ -1,19 +1,25 @@
 # CollegeSynx Student App
 
-A robust Flutter application designed for students of SVCE (Sri Venkateswara College of Engineering), now rebranded as **CollegeSynx**. This app provides a seamless interface for students to manage their academic life, view events, track cases, and verify their identity.
+A robust Flutter application designed for students, rebranded as **CollegeSynx**. This app provides a seamless interface for students to manage their academic life, view events, track disciplinary cases, and verify their identity, powered by **Firebase Firestore** for real-time data integration.
 
 ## 🚀 Key Features
 
-- **Authentication**:
-  - Secure login with College ID and Password.
+- **Authentication & Security**:
+  - Secure login with Student ID/Email.
   - **MPIN & Biometric Security**: Enforced MPIN setup and biometric authentication for quick and secure access.
-- **Student Dashboard**:
-  - **Home**: At-a-glance view of attendance, CGPA, ongoing cases, and upcoming events.
-  - **Events**: Browse campus events, register for them, and receive real-time updates.
-  - **Cases**: Track discipline or administrative cases (e.g., OD Requests, Bonafide Certificates) with status indicators.
-  - **Profile**: View personal and academic details.
-- **Navigation**:
-  - Smooth routing using **GoRouter** with guarded routes for unauthorized access prevention.
+- **Dynamic Student Dashboard**:
+  - **Home**: Real-time view of attendance, earned credits, ongoing cases, and upcoming events.
+  - **Pull-to-Refresh**: Keep data up-to-date with a simple swipe gesture across Home, Profile, Cases, and Events screens.
+- **Event Management**:
+  - **Browse & Register**: View upcoming campus events fetched dynamically from Firestore.
+  - **Instant Registration**: Register for events directly within the app with capacity handling.
+  - **Status Tracking**: See "Registered" status for events you are attending.
+- **Case Tracking**:
+  - **Ongoing Cases**: View detailed information about disciplinary or administrative cases.
+  - **Status Indicators**: Visual cues for Pending, Approved, or Rejected statuses.
+- **Profile Management**:
+  - View personal and academic details (Program, Department, Batch).
+  - Digital ID verification.
 
 ## 🛠️ Architecture & Tech Stack
 
@@ -22,33 +28,27 @@ The project follows a **Clean Architecture** principle to ensure scalability, te
 - **Framework**: Flutter
 - **Language**: Dart
 - **State Management**: `flutter_riverpod` (v2)
+- **Backend**: Firebase Firestore (Real-time Database)
 - **Routing**: `go_router`
 - **Fonts**: Google Fonts (Outfit)
+- **UI Components**: Material 3 Design
 - **Structure**:
-  - `presentation`: UI Widgets, Screens, and Providers.
-  - `domain`: Entities and Business Logic interfaces.
-  - `data`: Repositories implementations and Data sources.
+  - `presentation`: UI Widgets, Screens, and Riverpod Providers.
+  - `domain`: Entities, Use Cases, and Repository Interfaces.
+  - `data`: Firestore Repository implementations and Models.
   - `core`: Shared configuration, themes, and utilities.
-
-## 🔑 Mock Credentials (For Testing)
-
-Use these credentials to test the application's login flow:
-
-- **Login**: Any non-empty string (Mock Auth)
-- **MPIN**: Required to be set on first login (e.g., `1234`).
-
-> **Note**: The app uses mock repositories for data simulation, so no backend connection is required for basic UI testing.
 
 ## 🏁 Getting Started
 
 1.  **Prerequisites**:
     - Flutter SDK (3.10.4 or higher)
     - Dart SDK
+    - Firebase Project configured (google-services.json present)
 
 2.  **Installation**:
 
     ```bash
-    git clone https://github.com/gnanaofficial/Codesynx-student.git
+    git clone https://github.com/gnanaofficial/CollegeSynx-student.git
     cd svce-student-student
     flutter pub get
     ```
@@ -70,6 +70,8 @@ Use these credentials to test the application's login flow:
 ```
 lib/
 ├── core/                   # Global configs, routing, theme
+├── domain/                 # Business Logic & Entities
+├── data/                   # Firestore Repositories & DTOs
 ├── features/
 │   ├── auth/               # Login, MPIN, Biometrics
 │   ├── cases/              # Ongoing cases module
@@ -80,7 +82,8 @@ lib/
 └── main.dart               # Entry point
 ```
 
-## Login Credentials:
+## 🔑 Test Credentials
 
-Username: gnana123
-Password: password
+The app includes fallback logic for development to ensure UI elements are visible even without specific authentication states.
+
+- **Default Test ID**: `24BFA33L12` (Used for mock/fallback data fetching)
